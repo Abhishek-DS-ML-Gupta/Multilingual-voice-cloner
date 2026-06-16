@@ -2,6 +2,323 @@
 
 A production-ready web interface for OmniVoice running on NVIDIA GPUs with Gradio.
 
+# 🚀 Getting Started
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Abhishek-DS-ML-Gupta/Multilingual-voice-cloner.git
+
+cd Multilingual-voice-cloner
+```
+
+---
+
+## Create Virtual Environment
+
+### Linux / Ubuntu
+
+```bash
+python3 -m venv venv
+
+source venv/bin/activate
+```
+
+### Windows
+
+```powershell
+python -m venv venv
+
+venv\Scripts\activate
+```
+
+---
+
+## Install Dependencies
+
+```bash
+pip install --upgrade pip
+
+pip install -r requirements.txt
+```
+
+---
+
+## Install CUDA PyTorch (RTX A6000)
+
+For CUDA-enabled NVIDIA GPUs, install the appropriate PyTorch build before running the application. CUDA support is required for optimal TTS inference performance.
+
+Example:
+
+```bash
+pip install torch torchvision torchaudio \
+--index-url https://download.pytorch.org/whl/cu128
+```
+
+Verify:
+
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+Expected Output:
+
+```text
+True
+```
+
+---
+
+## Download Model
+
+The application automatically downloads OmniVoice model weights during first launch.
+
+Model:
+
+```text
+k2-fsa/OmniVoice
+```
+
+The initial startup may take several minutes depending on internet speed.
+
+---
+
+## Launch Application
+
+```bash
+python main.py
+```
+
+Server starts at:
+
+```text
+http://localhost:7860
+```
+
+For remote servers:
+
+```text
+http://YOUR_SERVER_IP:7860
+```
+
+---
+
+# 🖥 Ubuntu Server Deployment
+
+## Open Firewall Port
+
+```bash
+sudo ufw allow 7860/tcp
+
+sudo ufw reload
+```
+
+---
+
+## Run in Background
+
+```bash
+nohup python main.py > omnivoice.log 2>&1 &
+```
+
+Check logs:
+
+```bash
+tail -f omnivoice.log
+```
+
+---
+
+# 🐳 Docker Deployment
+
+Build image:
+
+```bash
+docker build -t omnivoice .
+```
+
+Run container:
+
+```bash
+docker run \
+--gpus all \
+-p 7860:7860 \
+omnivoice
+```
+
+---
+
+# ⚙️ Production Deployment
+
+Recommended stack:
+
+```text
+Ubuntu 22.04
+Python 3.10+
+CUDA 12+
+NVIDIA RTX A6000 48GB
+Nginx Reverse Proxy
+SSL Certificate
+Systemd Service
+```
+
+---
+
+# 🎤 Usage
+
+## Voice Cloning
+
+1. Upload reference audio
+2. Enter transcript of reference audio
+3. Enter target text
+4. Click Generate
+
+---
+
+## Cross-Lingual Voice Cloning
+
+Example:
+
+Reference Voice:
+
+```text
+Hindi
+```
+
+Target Text:
+
+```text
+English
+```
+
+Output:
+
+```text
+English speech with cloned Hindi voice
+```
+
+---
+
+## Multilingual Generation
+
+Supports 646+ languages covered by OmniVoice training data.
+
+Examples:
+
+* English
+* Hindi
+* Marathi
+* Gujarati
+* Bengali
+* Tamil
+* Telugu
+* Kannada
+* Malayalam
+* Punjabi
+* Urdu
+* Arabic
+* Chinese
+* Japanese
+* Korean
+* French
+* German
+* Spanish
+* Russian
+* Portuguese
+* Italian
+
+and many more.
+
+---
+
+# 🔥 RTX A6000 Optimization
+
+Recommended launch:
+
+```bash
+export CUDA_VISIBLE_DEVICES=0
+
+export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
+
+python main.py
+```
+
+---
+
+# 📊 System Requirements
+
+Minimum:
+
+```text
+RTX 3090 24GB
+32GB RAM
+8 CPU Cores
+```
+
+Recommended:
+
+```text
+RTX A6000 48GB
+64GB RAM
+16 CPU Cores
+Ubuntu 22.04
+CUDA 12+
+```
+
+---
+
+# 🧪 Health Check
+
+Verify GPU:
+
+```bash
+nvidia-smi
+```
+
+Verify CUDA:
+
+```bash
+python -c "import torch; print(torch.cuda.get_device_name(0))"
+```
+
+Verify Gradio:
+
+```bash
+curl http://localhost:7860
+```
+
+---
+
+# 🛑 Troubleshooting
+
+## CUDA Not Found
+
+```bash
+nvidia-smi
+```
+
+Ensure NVIDIA drivers and CUDA are correctly installed.
+
+---
+
+## Out of Memory
+
+Use FP16 inference:
+
+```python
+dtype=torch.float16
+```
+
+---
+
+## Slow Generation
+
+Ensure generation runs on GPU:
+
+```python
+device_map="cuda:0"
+```
+
 ## ✨ Features
 
 ### 🎤 Zero-Shot Voice Cloning
@@ -191,3 +508,13 @@ Expected:
 ## ⚠ Disclaimer
 
 This project must not be used for unauthorized voice impersonation, fraud, scams, or illegal activities. Users are responsible for complying with applicable laws and regulations.
+
+
+---
+
+# 📜 License
+
+This project uses OmniVoice.
+
+Users must not use this software for unauthorized voice impersonation, fraud, scams, or illegal activities.
+
