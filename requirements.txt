@@ -1,0 +1,63 @@
+```txt
+# Core OmniVoice
+omnivoice>=0.1.5
+
+# PyTorch (install CUDA build separately)
+torch
+torchaudio
+torchvision
+
+# HuggingFace
+transformers>=4.50.0
+accelerate>=1.0.0
+huggingface_hub
+safetensors
+
+# Audio Processing
+soundfile
+librosa
+pydub
+ffmpeg-python
+audioread
+
+# Numerical
+numpy
+scipy
+
+# Web UI
+gradio>=5.0.0
+
+# Data / Utils
+pandas
+tqdm
+requests
+pyyaml
+
+# OmniVoice Dependencies
+tensorboardx
+webdataset
+sentencepiece
+
+# Optional ASR
+openai-whisper
+
+# Optional Monitoring
+psutil
+gpustat
+
+# Optional API Support
+fastapi
+uvicorn
+
+# Optional Database
+sqlalchemy
+
+# Optional Image Assets
+pillow
+
+# Logging
+loguru
+
+# Environment Variables
+python-dotenv
+```
